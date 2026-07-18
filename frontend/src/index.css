@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gov-bg: #0D1117;
+  --color-gov-sidebar: #111827;
+  --color-gov-card: #1F2937;
+  --color-gov-accent: #22C55E;
+}
+
+/* Custom scrollbar styling for premium, minimal look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(31, 41, 55, 0.5);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+/* Smooth custom selection color */
+::selection {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: #22C55E;
+}
