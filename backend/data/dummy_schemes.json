@@ -1,0 +1,468 @@
+[
+  {
+    "id": "SCH-001",
+    "name": "NSP Post-Matric Scholarship Scheme for SC Students",
+    "category": "Scholarships",
+    "description": "Financial assistance to Scheduled Caste students pursuing post-matriculation or post-secondary courses to enable them to complete their education.",
+    "eligibility": "SC category students studying in Class 11, 12, Graduation, Post-Graduation, or professional courses with annual family income not exceeding ₹2,50,000, and having secured at least 50% marks in the previous exam.",
+    "benefits": "Reimbursement of compulsory non-refundable fees, academic allowance up to ₹1,200 per month for hostellers, and ₹550 per month for day scholars.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Caste Certificate",
+      "Income Certificate (signed by authorized revenue officer)",
+      "Mark sheets of last qualifying examination",
+      "Fee receipt of current academic year",
+      "Bank Passbook details"
+    ],
+    "official_link": "https://scholarships.gov.in"
+  },
+  {
+    "id": "SCH-002",
+    "name": "NSP Post-Matric Scholarship Scheme for OBC Students",
+    "category": "Scholarships",
+    "description": "Scholarships for Other Backward Classes (OBC) students for post-matric or post-secondary courses in recognized institutions.",
+    "eligibility": "OBC category students in recognized institutions with annual parent/guardian income not exceeding ₹1,00,000, and having secured 50% or above marks in the qualifying examination.",
+    "benefits": "Maintenance allowance up to ₹750 per month for hostellers and ₹350 per month for day scholars, plus reimbursement of tuition fees up to ₹20,000 per annum.",
+    "required_documents": [
+      "Aadhaar Card",
+      "OBC Category Certificate",
+      "Income Certificate",
+      "Previous Class Marksheet",
+      "Current Course Fee Receipt",
+      "Bank Account Details"
+    ],
+    "official_link": "https://scholarships.gov.in"
+  },
+  {
+    "id": "SCH-003",
+    "name": "Pragati Scholarship Scheme for Girl Students (Degree)",
+    "category": "Scholarships",
+    "description": "An AICTE initiative to support advancement of girls pursuing technical education (degree level).",
+    "eligibility": "Maximum of two girl children per family, admitted to the first year of a technical degree program in an AICTE-approved institution. Family income must be under ₹8,00,000 per annum.",
+    "benefits": "Scholarship of ₹50,000 per annum for tuition fees, computer purchase, stationery, books, and equipment. No other additional allowances.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Income Certificate",
+      "Admission letter issued by central counseling authority",
+      "Tuition Fee Receipt",
+      "Declaration by Parents showing maximum two girl children",
+      "SSC/HSC Marksheet"
+    ],
+    "official_link": "https://www.aicte-india.org"
+  },
+  {
+    "id": "SCH-004",
+    "name": "Saksham Scholarship Scheme for Specially-Abled Students",
+    "category": "Scholarships",
+    "description": "AICTE scheme supporting specially-abled kids to pursue technical degree or diploma courses.",
+    "eligibility": "Specially-abled student with a disability percentage of not less than 40%, studying in AICTE-approved institutions, with an annual family income of less than ₹8,00,000.",
+    "benefits": "₹50,000 per annum for tuition fees and incidentals, plus a specialized equipment support grant based on disability category.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Disability Certificate issued by competent medical authority",
+      "Family Income Certificate",
+      "Admission Letter and Fee Receipt",
+      "Class 10 and 12 mark sheets"
+    ],
+    "official_link": "https://www.aicte-india.org"
+  },
+  {
+    "id": "SCH-005",
+    "name": "Central Sector Scheme of Scholarship for College and University Students",
+    "category": "Scholarships",
+    "description": "Financial assistance to meritorious students from low-income families to meet their day-to-day expenses while pursuing higher studies.",
+    "eligibility": "Students above the 80th percentile in the relevant stream in Class 12 board exams, enrolled in regular graduation/post-graduation courses. Parental income must not exceed ₹4,50,000 per annum.",
+    "benefits": "₹12,000 per annum for the first three years of graduation, and ₹20,000 per annum for postgraduate courses.",
+    "required_documents": [
+      "Class 12 Marksheet",
+      "Income Certificate",
+      "Aadhaar Card",
+      "College Admission Verification Certificate",
+      "Bank Account Details"
+    ],
+    "official_link": "https://scholarships.gov.in"
+  },
+  {
+    "id": "SCH-006",
+    "name": "Begum Hazrat Mahal National Scholarship",
+    "category": "Scholarships",
+    "description": "Scholarship scheme for meritorious girl students belonging to national minorities.",
+    "eligibility": "Girl students belonging to Minority Communities (Muslim, Christian, Sikh, Buddhist, Jain, Parsi) studying in Classes 9 to 12. Must have secured at least 50% marks in the previous exam and family income under ₹2,00,000.",
+    "benefits": "₹5,000 per annum for Classes 9 and 10, and ₹6,000 per annum for Classes 11 and 12 to support school fees and study materials.",
+    "required_documents": [
+      "Minority Community Declaration",
+      "Marksheet of previous class",
+      "Income Certificate",
+      "Aadhaar Card",
+      "Verification form signed by Principal"
+    ],
+    "official_link": "https://scholarships.gov.in"
+  },
+  {
+    "id": "AGR-001",
+    "name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+    "category": "Agriculture",
+    "description": "Direct income support of ₹6,000 per year to landholding farmer families across the country.",
+    "eligibility": "All landholding farmer families with cultivable land in their names. Excluded: Institutional landholders, taxpayers, and retired/serving government employees.",
+    "benefits": "Financial benefit of ₹6,000 per year, paid in three equal installments of ₹2,000 every four months, credited directly to Aadhaar-seeded bank accounts.",
+    "required_documents": [
+      "Land Ownership Documents (Khatauni/Patta)",
+      "Aadhaar Card",
+      "Bank Account Details (Aadhaar linked)",
+      "Mobile Number",
+      "Self-Declaration Form"
+    ],
+    "official_link": "https://pmkisan.gov.in"
+  },
+  {
+    "id": "AGR-002",
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "category": "Agriculture",
+    "description": "A comprehensive crop insurance scheme safeguarding farmers against crop losses from natural calamities, pests, and diseases.",
+    "eligibility": "All farmers growing notified crops in notified areas, including sharecroppers and tenant farmers. Voluntary for all farmers.",
+    "benefits": "Insurance cover against crop damage. Premium rates payable by farmers are capped at 2% for Kharif crops, 1.5% for Rabi crops, and 5% for annual commercial/horticultural crops, with the rest subsidized by government.",
+    "required_documents": [
+      "Land Record Documents",
+      "Sowing Certificate issued by local revenue authority",
+      "Aadhaar Card",
+      "Bank Passbook copy",
+      "Tenant agreement (if applicable)"
+    ],
+    "official_link": "https://pmfby.gov.in"
+  },
+  {
+    "id": "AGR-003",
+    "name": "PM Krishi Sinchayee Yojana (PMKSY) - Per Drop More Crop",
+    "category": "Agriculture",
+    "description": "Promotes micro-irrigation systems like drip and sprinkler irrigation to improve water-use efficiency at the farm level.",
+    "eligibility": "All categories of farmers who own agricultural land. Members of cooperative societies and self-help groups are also eligible.",
+    "benefits": "Subsidies up to 55% of the system cost for Small & Marginal farmers, and up to 45% for other farmers to install drip and sprinkler irrigation units.",
+    "required_documents": [
+      "Land Registry Copy",
+      "Soil/Water test report (if available)",
+      "Aadhaar Card",
+      "Bank Details",
+      "Passport size photographs",
+      "Quotation of irrigation system from approved vendor"
+    ],
+    "official_link": "https://pmksy.gov.in"
+  },
+  {
+    "id": "AGR-004",
+    "name": "Pradhan Mantri Kisan Maan-Dhan Yojana (PM-KMY)",
+    "category": "Agriculture",
+    "description": "A voluntary and contributory pension scheme for small and marginal farmers to provide social security in their old age.",
+    "eligibility": "Small and marginal farmers owning up to 2 hectares of cultivable land, aged between 18 and 40 years. Must not be covered under other pension schemes.",
+    "benefits": "A monthly assured pension of ₹3,000 after attaining the age of 60 years. In case of death, the spouse is entitled to 50% pension.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Land Ownership papers",
+      "Bank Account details",
+      "Consent form for auto-debit of monthly premium contribution (ranges from ₹55 to ₹200 based on entry age)"
+    ],
+    "official_link": "https://pmkmy.gov.in"
+  },
+  {
+    "id": "AGR-005",
+    "name": "Paramparagat Krishi Vikas Yojana (PKVY)",
+    "category": "Agriculture",
+    "description": "Promotes organic farming and certified organic cultivation practices to improve soil health and crop value.",
+    "eligibility": "Farmers belonging to clusters of minimum 50 acres or 50 farmers. Preference to small and marginal farmers.",
+    "benefits": "Financial assistance of ₹50,000 per hectare for a 3-year period, of which ₹31,000 is given directly via DBT for organic inputs (seeds, bio-fertilizers, bio-pesticides).",
+    "required_documents": [
+      "Aadhaar Card",
+      "Land registration documents",
+      "Cluster membership certificate",
+      "Bank Passbook copy"
+    ],
+    "official_link": "https://dsa.dacof.nic.in"
+  },
+  {
+    "id": "AGR-006",
+    "name": "Soil Health Card Scheme",
+    "category": "Agriculture",
+    "description": "Provides customized soil reports and fertilizer recommendations to farmers to increase productivity through balanced nutrient management.",
+    "eligibility": "All landholding farmers in India. Soil samples are collected and tested once every two years.",
+    "benefits": "Free soil testing and distribution of Soil Health Cards detailing soil nutrient status (macro, micro, and physical parameters) along with crop-wise dosage recommendations.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Land survey number/details",
+      "Mobile number"
+    ],
+    "official_link": "https://soilhealth.dac.gov.in"
+  },
+  {
+    "id": "LNS-001",
+    "name": "Pradhan Mantri Mudra Yojana (PMMY)",
+    "category": "Business & Loans",
+    "description": "Collateral-free business loans up to ₹10 Lakh to micro and small non-corporate, non-farm enterprises.",
+    "eligibility": "Proprietorships, partnerships, and small companies engaged in manufacturing, trading, or services. Loan amounts are graded in three categories: Shishu (up to ₹50,000), Kishor (₹50,000 to ₹5 Lakh), and Tarun (₹5 Lakh to ₹10 Lakh).",
+    "benefits": "Collateral-free loans, low processing fees, reasonable interest rates, and issuance of Mudra Cards for working capital withdrawals.",
+    "required_documents": [
+      "Aadhaar Card / PAN Card / Voter ID",
+      "Proof of Business Address",
+      "Quotation of machinery/assets to be purchased",
+      "Category certificate (SC/ST/OBC) if applicable",
+      "Last 6 months bank statement",
+      "Business registration license or Udyam Registration"
+    ],
+    "official_link": "https://www.mudra.org.in"
+  },
+  {
+    "id": "LNS-002",
+    "name": "Stand-Up India Scheme",
+    "category": "Business & Loans",
+    "description": "Promotes entrepreneurship among women and SC/ST communities by providing bank loans for greenfield business ventures.",
+    "eligibility": "SC/ST and/or women entrepreneurs above 18 years of age. Green-field projects only (first-time venture). Non-individuals must have 51% shareholding held by SC/ST or women.",
+    "benefits": "Composite loans (inclusive of term loan and working capital) between ₹10 Lakh and ₹1 Crore covering up to 85% of project cost, at lowest applicable interest rates.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Proof of SC/ST category (if applicable)",
+      "Project Report detailing business plan",
+      "Proof of business address and incorporation",
+      "Balance sheets of last three years (for existing firms) or projected balance sheets",
+      "Pollution control board clearance (if manufacturing)"
+    ],
+    "official_link": "https://www.standupmitra.in"
+  },
+  {
+    "id": "LNS-003",
+    "name": "Startup India Seed Fund Scheme (SISFS)",
+    "category": "Business & Loans",
+    "description": "Provides financial assistance to early-stage startups for proof of concept, prototype development, product trials, and market entry.",
+    "eligibility": "DPIIT-recognized startups incorporated not more than 2 years ago, with a viable business model, technology incorporation, and not having received more than ₹10 Lakh monetary support under other government schemes.",
+    "benefits": "Grants up to ₹20 Lakh for validation of proof of concept/prototype development, and up to ₹50 Lakh via debt/convertible debentures for market entry and scaling.",
+    "required_documents": [
+      "DPIIT Recognition Certificate",
+      "Incorporation Certificate",
+      "Pitch Deck / Business Plan",
+      "Proof of technology/innovation used",
+      "Shareholding pattern details"
+    ],
+    "official_link": "https://www.startupindia.gov.in"
+  },
+  {
+    "id": "LNS-004",
+    "name": "Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE)",
+    "category": "Business & Loans",
+    "description": "Collateral-free credit facility to new and existing micro and small enterprises to encourage entrepreneurship.",
+    "eligibility": "New and existing Micro and Small Enterprises (MSEs) engaged in manufacturing or services. Retail trade is also eligible.",
+    "benefits": "Provides credit guarantee to lenders for loans up to ₹5 Crore, making it possible for entrepreneurs to get loans without providing third-party guarantee or property collateral.",
+    "required_documents": [
+      "Detailed Project Report (DPR)",
+      "Udyam Registration Certificate",
+      "PAN Card and Aadhaar Card of promoters",
+      "Audited financial statements (for existing business)",
+      "Business income tax returns"
+    ],
+    "official_link": "https://www.cgtmse.in"
+  },
+  {
+    "id": "LNS-005",
+    "name": "Prime Minister's Employment Generation Programme (PMEGP)",
+    "category": "Business & Loans",
+    "description": "Credit-linked subsidy scheme for generating employment opportunities through establishment of new micro-enterprises.",
+    "eligibility": "Any individual above 18 years of age. Must have passed at least 8th standard for project costs above ₹10 Lakh in manufacturing and ₹5 Lakh in services.",
+    "benefits": "Bank loans for projects up to ₹50 Lakh (manufacturing) and ₹20 Lakh (business/service). Capital subsidy of 15% to 35% based on location (rural/urban) and social category.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Project Report",
+      "Education/Educational Qualification Certificate (8th pass certificate)",
+      "Caste/Special Category Certificate",
+      "Population Certificate (from local body for rural areas)"
+    ],
+    "official_link": "https://www.kviconline.gov.in"
+  },
+  {
+    "id": "LNS-006",
+    "name": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+    "category": "Business & Loans",
+    "description": "Special micro-credit facility for street vendors to access affordable working capital loans to resume livelihoods after Covid.",
+    "eligibility": "Street vendors and hawkers vending in urban, semi-urban, or rural areas on or before March 24, 2020. Must possess Vending Certificate/ID card.",
+    "benefits": "First collateral-free working capital loan of up to ₹10,000, with a 7% interest subsidy on timely repayment. Eligible for ₹20,000 second loan and ₹50,000 third loan upon repayment.",
+    "required_documents": [
+      "Certificate of Vending or Letter of Recommendation (LoR)",
+      "Aadhaar Card",
+      "Voter Identity Card",
+      "Bank Account details"
+    ],
+    "official_link": "https://pmsvanidhi.mohua.gov.in"
+  },
+  {
+    "id": "HEA-001",
+    "name": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+    "category": "Healthcare",
+    "description": "The world's largest government-funded health assurance scheme, offering free hospitalization cover of ₹5 Lakh per family per year.",
+    "eligibility": "Families listed in the Socio-Economic Caste Census (SECC) 2011 database, including rural households with specific deprivation criteria and identified occupational categories of urban workers.",
+    "benefits": "Cashless and paperless coverage of up to ₹5,00,000 per family per year for secondary and tertiary care hospitalization, covering diagnostics, medicines, and pre/post-hospitalization costs.",
+    "required_documents": [
+      "Aadhaar Card / Ration Card",
+      "PM Letter / Family ID Number",
+      "Mobile number for OTP verification"
+    ],
+    "official_link": "https://beneficiary.nha.gov.in"
+  },
+  {
+    "id": "HEA-002",
+    "name": "Pradhan Mantri Bhartiya Janaushadhi Pariyojana (PMBJP)",
+    "category": "Healthcare",
+    "description": "Campaign to make quality generic medicines available to everyone at highly affordable prices through specialized retail centers.",
+    "eligibility": "Open to all Indian citizens. Anyone with a valid doctor's prescription can purchase medicines from Janaushadhi Kendras.",
+    "benefits": "Access to over 1,800 high-quality generic medicines and surgical items at prices that are 50% to 90% lower than equivalent branded medicines in the market.",
+    "required_documents": [
+      "Doctor's Prescription (to purchase prescription medicines)",
+      "No documents required for general OTC products"
+    ],
+    "official_link": "https://janaushadhi.gov.in"
+  },
+  {
+    "id": "HEA-003",
+    "name": "Pradhan Mantri Suraksha Bima Yojana (PMSBY)",
+    "category": "Healthcare",
+    "description": "An extremely affordable, one-year accidental death and disability insurance cover for Indian citizens.",
+    "eligibility": "All individual bank/post office account holders aged between 18 and 70 years who give auto-debit consent for the premium.",
+    "benefits": "Accidental insurance cover of ₹2,00,000 for accidental death or total irrecoverable loss of both eyes/limbs. Cover of ₹1,00,000 for partial permanent disability, for a premium of just ₹20 per year.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Bank Account details",
+      "Completed PMSBY Application & Nominee Form"
+    ],
+    "official_link": "https://www.jansuraksha.gov.in"
+  },
+  {
+    "id": "HEA-004",
+    "name": "Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)",
+    "category": "Healthcare",
+    "description": "A government-backed, low-cost life insurance scheme offering life cover for death due to any cause.",
+    "eligibility": "All bank/post office savings account holders aged between 18 and 50 years. Auto-debit premium consent is mandatory.",
+    "benefits": "Life insurance cover of ₹2,00,000 in case of death of the insured due to any cause, at a low premium of ₹436 per annum.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Bank Savings Passbook",
+      "Consent-cum-Declaration form",
+      "Nominee details"
+    ],
+    "official_link": "https://www.jansuraksha.gov.in"
+  },
+  {
+    "id": "HEA-005",
+    "name": "Central Government Health Scheme (CGHS)",
+    "category": "Healthcare",
+    "description": "Comprehensive medical care facility for Central Government employees, pensioners, and their dependent family members.",
+    "eligibility": "All central government employees, pensioners, members of parliament, judges, and specified eligible dependents.",
+    "benefits": "Outpatient treatment (OPD) at CGHS wellness centers, free medicines, specialist consultation at government and empanelled private hospitals, and indoor hospitalization expenses reimbursement.",
+    "required_documents": [
+      "CGHS Card Application Form",
+      "Proof of Employment / Pension Payment Order (PPO)",
+      "Address proof",
+      "Photos of dependents",
+      "Aadhaar Card"
+    ],
+    "official_link": "https://cghs.nic.in"
+  },
+  {
+    "id": "HEA-006",
+    "name": "Pradhan Mantri Matru Vandana Yojana (PMMVY)",
+    "category": "Healthcare",
+    "description": "Maternity benefit program offering cash incentives to pregnant and lactating mothers for the first living child.",
+    "eligibility": "All Pregnant Women and Lactating Mothers (PW&LM), excluding those in regular employment with Central/State Governments or PSUs.",
+    "benefits": "Cash incentive of ₹5,000 in three installments upon meeting milestones: early registration of pregnancy, antenatal check-up, and registration of child birth with first cycle of immunization.",
+    "required_documents": [
+      "Mother and Child Protection (MCP) Card copy",
+      "Aadhaar Card of beneficiary and husband",
+      "Joint Bank Passbook copy",
+      "Pregnancy registration and check-up receipts"
+    ],
+    "official_link": "https://wcd.nic.in"
+  },
+  {
+    "id": "WEL-001",
+    "name": "Pradhan Mantri Awas Yojana - Gramin (PMAY-G)",
+    "category": "Social Welfare",
+    "description": "Aims to provide a pucca house with basic amenities to all houseless householders and those living in dilapidated houses in rural areas.",
+    "eligibility": "Families living in kachha or dilapidated houses in rural areas. Identified using SECC-2011 data and verified by Gram Sabhas.",
+    "benefits": "Financial assistance of ₹1,20,000 in plain areas and ₹1,30,000 in hilly/difficult areas for house construction, plus ₹12,000 for toilet construction and 95 days of unskilled labor wage under MGNREGA.",
+    "required_documents": [
+      "Aadhaar Card",
+      "MGNREGA Job Card number",
+      "Ration Card",
+      "Bank Account details",
+      "Sworn affidavit of not owning pucca house"
+    ],
+    "official_link": "https://pmayg.nic.in"
+  },
+  {
+    "id": "WEL-002",
+    "name": "Pradhan Mantri Ujjwala Yojana (PMUY)",
+    "category": "Social Welfare",
+    "description": "Provides clean cooking fuel (LPG connections) to women from below-poverty-line (BPL) households to replace unhealthy traditional fuels.",
+    "eligibility": "Adult woman belonging to an SC/ST, PMAY, Antyodaya Anna Yojana (AAY) or most backward class household, with no existing LPG connection in the household.",
+    "benefits": "Free LPG connection with first cylinder and stove fully funded by the government. Subsidized refills up to 12 cylinders per year.",
+    "required_documents": [
+      "BPL Ration Card",
+      "Aadhaar Card of applicant and all adult family members",
+      "Bank Account Passbook",
+      "Know Your Customer (KYC) form"
+    ],
+    "official_link": "https://www.pmuy.gov.in"
+  },
+  {
+    "id": "WEL-003",
+    "name": "Atal Pension Yojana (APY)",
+    "category": "Social Welfare",
+    "description": "A pension scheme targeting workers in the unorganized sector to secure their income post retirement.",
+    "eligibility": "Any Indian citizen aged between 18 and 40 years holding a savings bank account. Must not be a taxpayer or beneficiary of other social security schemes.",
+    "benefits": "Guaranteed minimum pension of ₹1,000, ₹2,000, ₹3,000, ₹4,000 or ₹5,000 per month after age 60, based on monthly contribution amount and entry age.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Bank/Post Office Savings Account",
+      "APY Registration form",
+      "Nominee details"
+    ],
+    "official_link": "https://www.npscra.nsdl.co.in"
+  },
+  {
+    "id": "WEL-004",
+    "name": "Sukanya Samriddhi Yojana (SSY)",
+    "category": "Social Welfare",
+    "description": "Small deposit savings scheme specifically for the girl child, offering high interest rates and tax exemptions.",
+    "eligibility": "Parents or legal guardians can open an account in the name of a girl child below the age of 10 years. Maximum of two accounts per family.",
+    "benefits": "Highly attractive interest rate (compounded annually), income tax deductions under Section 80C, and maturity amount fully tax-free at age 21 or marriage after age 18.",
+    "required_documents": [
+      "Birth Certificate of the girl child",
+      "Aadhaar Card and PAN Card of parents/guardian",
+      "Address proof",
+      "Photograph of guardian"
+    ],
+    "official_link": "https://www.indiapost.gov.in"
+  },
+  {
+    "id": "WEL-005",
+    "name": "Pradhan Mantri Garib Kalyan Anna Yojana (PMGKAY)",
+    "category": "Social Welfare",
+    "description": "Food security welfare scheme providing free food grains to eligible beneficiaries to eliminate hunger.",
+    "eligibility": "Families covered under the National Food Security Act (NFSA) - Antyodaya Anna Yojana (AAY) and Priority Households (PHH).",
+    "benefits": "5 kg of free food grains (rice/wheat/coarse grains) per person per month in addition to the highly subsidized regular NFSA allocation.",
+    "required_documents": [
+      "Ration Card (NFSA enabled)",
+      "Aadhaar Card",
+      "Aadhaar-seeded POS authentication at ration shop"
+    ],
+    "official_link": "https://nfsa.gov.in"
+  },
+  {
+    "id": "WEL-006",
+    "name": "PM-VISHWAKARMA",
+    "category": "Social Welfare",
+    "description": "Provides end-to-end support to traditional artisans and craftspeople to scale up their skills and market access.",
+    "eligibility": "An artisan or craftsperson working with hands and tools in one of the 18 family-based traditional trades (e.g. carpenter, blacksmith, potter, tailor) aged 18+.",
+    "benefits": "Vishwakarama Certificate & ID card, skill upgradation training with ₹500 stipend/day, ₹15,000 tool kit incentive, and collateral-free enterprise development loans up to ₹3 Lakh at a concessional interest rate of 5%.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Mobile number linked with Aadhaar",
+      "Bank Account details",
+      "Trade declaration"
+    ],
+    "official_link": "https://pmvishwakarma.gov.in"
+  }
+]

@@ -21,8 +21,8 @@ import Home from './pages/home';
 import { initialChats, getMockResponse } from './data/dummyData';
 
 export default function App() {
-  const [chats, setChats] = useState(initialChats);
-  const [activeChatId, setActiveChatId] = useState("chat-1");
+  const [chats, setChats] = useState([]);
+  const [activeChatId, setActiveChatId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [deleteChatId, setDeleteChatId] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
@@ -39,36 +39,115 @@ export default function App() {
   const [selectedModel, setSelectedModel] = useState("govassist-v1-fast");
   const [quickResponses, setQuickResponses] = useState(true);
 
+  // Load history from FastAPI backend on mount
+  React.useEffect(() => {
+    const init = async () => {
+      try {
+        const res = await fetch("http://localhost:8000/history");
+        if (res.ok) {
+          const list = await res.json();
+          setChats(list);
+          if (list.length > 0) {
+            // Load detail of the first active chat
+            const firstId = list[0].id;
+            const detailRes = await fetch(`http://localhost:8000/chat/${firstId}`);
+            if (detailRes.ok) {
+              const detail = await detailRes.json();
+              setChats(prev => prev.map(c => c.id === firstId ? detail : c));
+              setActiveChatId(firstId);
+            }
+          } else {
+            // Auto-create a chat if history is empty
+            await handleNewChat();
+          }
+        }
+      } catch (e) {
+        console.error("Backend offline. Falling back to local mock data.", e);
+        setChats(initialChats);
+        setActiveChatId("chat-1");
+      }
+    };
+    init();
+  }, []);
+
   // Find active chat object
   const activeChat = chats.find(c => c.id === activeChatId) || chats[0] || null;
 
-  // Create a new empty chat
-  const handleNewChat = () => {
-    const newId = `chat-${Date.now()}`;
-    const newChat = {
-      id: newId,
-      title: "New Assistant Chat",
-      timestamp: "Today",
-      isPinned: false,
-      messages: []
-    };
-    setChats(prev => [newChat, ...prev]);
-    setActiveChatId(newId);
+  // Create a new empty chat session
+  const handleNewChat = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/new-chat", { method: "POST" });
+      if (res.ok) {
+        const data = await res.json(); // { chat_id: "..." }
+        const newChat = {
+          id: data.chat_id,
+          title: "New Assistant Chat",
+          timestamp: "Today",
+          isPinned: false,
+          messages: []
+        };
+        setChats(prev => [newChat, ...prev]);
+        setActiveChatId(data.chat_id);
+      }
+    } catch (e) {
+      console.error("Failed to create new chat in backend:", e);
+      // Local fallback
+      const localId = `chat-${Date.now()}`;
+      const localChat = {
+        id: localId,
+        title: "New Assistant Chat (Offline)",
+        timestamp: "Today",
+        isPinned: false,
+        messages: []
+      };
+      setChats(prev => [localChat, ...prev]);
+      setActiveChatId(localId);
+    }
   };
 
-  // Select a chat
-  const handleSelectChat = (id) => {
-    setActiveChatId(id);
+  // Select a chat and fetch its message details from backend
+  const handleSelectChat = async (id) => {
+    // If we already have the messages list loaded, switch active instantly
+    const chatObj = chats.find(c => c.id === id);
+    if (chatObj && chatObj.messages) {
+      setActiveChatId(id);
+    }
+    
+    try {
+      const res = await fetch(`http://localhost:8000/chat/${id}`);
+      if (res.ok) {
+        const detail = await res.json();
+        setChats(prev => prev.map(c => c.id === id ? detail : c));
+        setActiveChatId(id);
+      }
+    } catch (e) {
+      console.error("Error loading chat details:", e);
+      setActiveChatId(id); // Fallback to local state transition
+    }
   };
 
   // Pin/Unpin a chat
-  const handlePinChat = (id) => {
-    setChats(prev => prev.map(chat => {
-      if (chat.id === id) {
-        return { ...chat, isPinned: !chat.isPinned };
+  const handlePinChat = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:8000/chat/${id}/pin`, { method: "POST" });
+      if (res.ok) {
+        const data = await res.json(); // { status: "success", isPinned: boolean }
+        setChats(prev => {
+          const updated = prev.map(c => c.id === id ? { ...c, isPinned: data.isPinned } : c);
+          // Sort by pinned first, then by timestamp (or index)
+          return updated;
+        });
       }
-      return chat;
-    }));
+    } catch (e) {
+      console.error("Failed to toggle pin state in backend:", e);
+      // Local fallback
+      setChats(prev => prev.map(chat => {
+        if (chat.id === id) {
+          return { ...chat, isPinned: !chat.isPinned };
+        }
+        return chat;
+      }));
+    }
   };
 
   // Set chat up for deletion (opens modal)
@@ -77,49 +156,58 @@ export default function App() {
   };
 
   // Perform deletion after confirmation
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (!deleteChatId) return;
 
-    const remainingChats = chats.filter(chat => chat.id !== deleteChatId);
-    setChats(remainingChats);
+    try {
+      const res = await fetch(`http://localhost:8000/chat/${deleteChatId}`, { method: "DELETE" });
+      if (res.ok) {
+        const remainingChats = chats.filter(chat => chat.id !== deleteChatId);
+        setChats(remainingChats);
 
-    // If we deleted the currently active chat
-    if (activeChatId === deleteChatId) {
-      if (remainingChats.length > 0) {
-        setActiveChatId(remainingChats[0].id);
-      } else {
-        // No chats left, auto create one
-        const freshId = `chat-${Date.now()}`;
-        const freshChat = {
-          id: freshId,
-          title: "New Assistant Chat",
-          timestamp: "Today",
-          isPinned: false,
-          messages: []
-        };
-        setChats([freshChat]);
-        setActiveChatId(freshId);
+        // If we deleted the currently active chat
+        if (activeChatId === deleteChatId) {
+          if (remainingChats.length > 0) {
+            await handleSelectChat(remainingChats[0].id);
+          } else {
+            await handleNewChat();
+          }
+        }
       }
+    } catch (e) {
+      console.error("Failed to delete chat in backend:", e);
+      // Local fallback
+      const remainingChats = chats.filter(chat => chat.id !== deleteChatId);
+      setChats(remainingChats);
+      if (activeChatId === deleteChatId) {
+        if (remainingChats.length > 0) {
+          setActiveChatId(remainingChats[0].id);
+        } else {
+          const freshId = `chat-${Date.now()}`;
+          setChats([{ id: freshId, title: "New Assistant Chat", timestamp: "Today", isPinned: false, messages: [] }]);
+          setActiveChatId(freshId);
+        }
+      }
+    } finally {
+      setDeleteChatId(null);
     }
-    setDeleteChatId(null);
   };
 
   // Handle message sending
-  const handleSendMessage = (text) => {
+  const handleSendMessage = async (text) => {
     if (isTyping) return; // ignore if AI is answering
+    if (!text || !text.trim()) return;
 
     const timestampStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const userMessage = {
-      id: `msg-${Date.now()}-user`,
       sender: "user",
       text: text,
       timestamp: timestampStr
     };
 
-    // Update active chat's messages
+    // Update active chat's messages locally (Instant feedback)
     setChats(prevChats => prevChats.map(c => {
       if (c.id === activeChatId) {
-        // If it's a new empty chat, update title dynamically from query
         let title = c.title;
         if (c.messages.length === 0) {
           title = text.length > 30 ? `${text.slice(0, 30)}...` : text;
@@ -127,49 +215,79 @@ export default function App() {
         return {
           ...c,
           title,
-          messages: [...c.messages, userMessage]
+          messages: [...(c.messages || []), userMessage]
         };
       }
       return c;
     }));
 
-    // Trigger AI Typing Animation
     setIsTyping(true);
 
-    // Simulate AI response after 1.2s delay
-    setTimeout(() => {
-      const response = getMockResponse(text);
-      const aiMessage = {
-        id: `msg-${Date.now()}-ai`,
+    try {
+      const res = await fetch("http://localhost:8000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: activeChatId,
+          message: text
+        })
+      });
+
+      if (res.ok) {
+        const aiMessage = await res.json(); // { sender: "ai", text: "...", timestamp: "..." }
+        
+        // Fetch refreshed chat data to sync final title & full history from DB
+        const detailRes = await fetch(`http://localhost:8000/chat/${activeChatId}`);
+        if (detailRes.ok) {
+          const updatedChat = await detailRes.json();
+          setChats(prev => prev.map(c => c.id === activeChatId ? updatedChat : c));
+        } else {
+          // Fallback update if detail fetch fails
+          setChats(prevChats => prevChats.map(c => {
+            if (c.id === activeChatId) {
+              return {
+                ...c,
+                messages: [...(c.messages || []), aiMessage]
+              };
+            }
+            return c;
+          }));
+        }
+      } else {
+        const errMessage = {
+          sender: "ai",
+          text: "⚠️ Server Error: Failed to receive response from backend.",
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setChats(prev => prev.map(c => c.id === activeChatId ? { ...c, messages: [...(c.messages || []), errMessage] } : c));
+      }
+    } catch (e) {
+      console.error("Failed to send chat message:", e);
+      const errMessage = {
         sender: "ai",
-        text: response.text,
+        text: "⚠️ Connection Error: Cannot connect to GovAssist AI backend.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-
-      setChats(prevChats => prevChats.map(c => {
-        if (c.id === activeChatId) {
-          let title = c.title;
-          // Set final title if this is the first complete conversation cycle
-          if (c.messages.length === 1) { // just has userMsg
-            title = response.title || (text.length > 30 ? `${text.slice(0, 30)}...` : text);
-          }
-          return {
-            ...c,
-            title,
-            messages: [...c.messages, aiMessage]
-          };
-        }
-        return c;
-      }));
+      setChats(prev => prev.map(c => c.id === activeChatId ? { ...c, messages: [...(c.messages || []), errMessage] } : c));
+    } finally {
       setIsTyping(false);
-    }, 1200);
+    }
   };
 
-  // Reset database state to defaults (Helper in settings)
-  const handleResetData = () => {
-    if (confirm("Reset chat history to default examples?")) {
-      setChats(initialChats);
-      setActiveChatId("chat-1");
+  // Reset database state to defaults
+  const handleResetData = async () => {
+    if (confirm("Reset chat history to default examples? (Note: This will clear local history and start fresh)")) {
+      // Clear all chats in backend
+      try {
+        for (const chat of chats) {
+          await fetch(`http://localhost:8000/chat/${chat.id}`, { method: "DELETE" });
+        }
+        await handleNewChat();
+      } catch (e) {
+        console.error(e);
+        setChats(initialChats);
+        setActiveChatId("chat-1");
+      }
       setIsSettingsOpen(false);
     }
   };
