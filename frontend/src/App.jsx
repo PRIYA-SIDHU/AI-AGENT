@@ -17,6 +17,7 @@ import Header from './components/Header';
 import ChatArea from './components/ChatArea';
 import ChatInput from './components/ChatInput';
 import DeleteDialog from './components/DeleteDialog';
+import Home from './pages/home';
 import { initialChats, getMockResponse } from './data/dummyData';
 
 export default function App() {
@@ -25,6 +26,9 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [deleteChatId, setDeleteChatId] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
+
+  // Page navigation state — 'chat' is default, 'home' shows the Home landing page
+  const [currentPage, setCurrentPage] = useState('home');
 
   // Settings, Help, About Modals State
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -177,37 +181,41 @@ export default function App() {
       <Sidebar
         chats={chats}
         activeChatId={activeChatId}
-        onSelectChat={handleSelectChat}
-        onNewChat={handleNewChat}
+        onSelectChat={(id) => { handleSelectChat(id); setCurrentPage('chat'); }}
+        onNewChat={() => { handleNewChat(); setCurrentPage('chat'); }}
         onPinChat={handlePinChat}
         onDeleteChatRequest={handleDeleteChatRequest}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
-        onOpenSettings={() => setIsSettingsOpen(true)}
-        onOpenHelp={() => setIsHelpOpen(true)}
         onOpenAbout={() => setIsAboutOpen(true)}
+        onNavigateHome={() => { setCurrentPage('home'); setIsSidebarOpen(false); }}
       />
 
       {/* 2. Main Right-hand Area */}
-      <div className="flex-1 flex flex-col min-w-0 relative h-full">
-        {/* Header */}
+      <div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden">
+        {/* Header — always visible */}
         <Header
-          activeChatTitle={activeChat ? activeChat.title : "GovAssist Assistant"}
+          activeChatTitle={currentPage === 'home' ? 'Home' : (activeChat ? activeChat.title : 'GovAssist Assistant')}
           onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         />
 
-        {/* Chat Area containing Message List or Empty State */}
-        <ChatArea
-          messages={activeChat ? activeChat.messages : []}
-          isTyping={isTyping}
-          onSelectSuggestion={handleSendMessage}
-        />
-
-        {/* Bottom Input Field */}
-        <ChatInput
-          onSendMessage={handleSendMessage}
-          disabled={isTyping}
-        />
+        {currentPage === 'home' ? (
+          /* Home Landing Page */
+          <Home />
+        ) : (
+          /* Chat Area */
+          <>
+            <ChatArea
+              messages={activeChat ? activeChat.messages : []}
+              isTyping={isTyping}
+              onSelectSuggestion={handleSendMessage}
+            />
+            <ChatInput
+              onSendMessage={handleSendMessage}
+              disabled={isTyping}
+            />
+          </>
+        )}
       </div>
 
       {/* 3. Delete Confirmation Dialog Modal */}

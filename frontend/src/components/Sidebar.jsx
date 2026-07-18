@@ -5,12 +5,15 @@ import {
   MoreVertical,
   Pin,
   Trash2,
-  Settings,
-  HelpCircle,
   Info,
   MessageSquare,
   X,
-  PinOff
+  PinOff,
+  Home,
+  BookOpen,
+  UserCheck,
+  Star,
+  User
 } from 'lucide-react';
 import Logo from './Logo';
 
@@ -23,9 +26,13 @@ export default function Sidebar({
   onDeleteChatRequest,
   isOpen,
   onClose,
-  onOpenSettings,
-  onOpenHelp,
-  onOpenAbout
+  onOpenAbout,
+  // Future navigation callbacks
+  onNavigateHome,
+  onNavigateAllSchemes,
+  onNavigateEligibleSchemes,
+  onNavigateStarredSchemes,
+  onNavigateProfile
 }) {
   const [activeMenuChatId, setActiveMenuChatId] = useState(null);
   const menuRef = useRef(null);
@@ -95,8 +102,52 @@ export default function Sidebar({
         </button>
       </div>
 
+      {/* Navigation Options */}
+      <div className="px-4 pt-4 space-y-1">
+        <button
+          onClick={() => {
+            if (onNavigateHome) onNavigateHome();
+            // TODO: Route to Home page (e.g. navigate('/home') or setPage('home'))
+          }}
+          className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-xl transition-all cursor-pointer text-left"
+        >
+          <Home className="w-4 h-4" />
+          <span>Home</span>
+        </button>
+        <button
+          onClick={() => {
+            if (onNavigateAllSchemes) onNavigateAllSchemes();
+            // TODO: Route to All Schemes page (e.g. navigate('/all-schemes') or setPage('all-schemes'))
+          }}
+          className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-xl transition-all cursor-pointer text-left"
+        >
+          <BookOpen className="w-4 h-4" />
+          <span>All Schemes</span>
+        </button>
+        <button
+          onClick={() => {
+            if (onNavigateEligibleSchemes) onNavigateEligibleSchemes();
+            // TODO: Route to Eligible Schemes page (e.g. navigate('/eligible-schemes') or setPage('eligible-schemes'))
+          }}
+          className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-xl transition-all cursor-pointer text-left"
+        >
+          <UserCheck className="w-4 h-4" />
+          <span>Eligible Schemes</span>
+        </button>
+        <button
+          onClick={() => {
+            if (onNavigateStarredSchemes) onNavigateStarredSchemes();
+            // TODO: Route to Starred Schemes page (e.g. navigate('/starred-schemes') or setPage('starred-schemes'))
+          }}
+          className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-xl transition-all cursor-pointer text-left"
+        >
+          <Star className="w-4 h-4" />
+          <span>Starred Schemes</span>
+        </button>
+      </div>
+
       {/* New Chat Button */}
-      <div className="p-4">
+      <div className="px-4 py-3">
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -125,7 +176,7 @@ export default function Sidebar({
               <div className="space-y-1">
                 <div className="px-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
                   <Pin className="w-3 h-3 text-emerald-500/80 fill-emerald-500/20 rotate-45" />
-                  <span>Pinned Chats</span>
+                  <span>Pinned Chats History</span>
                 </div>
                 {grouped.pinned.map(chat => (
                   <ChatListItem
@@ -145,75 +196,87 @@ export default function Sidebar({
               </div>
             )}
 
-            {/* Today Section */}
-            {grouped.today.length > 0 && (
-              <div className="space-y-1">
-                <div className="px-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                  Today
+            {/* Unpinned Section */}
+            {(grouped.today.length > 0 || grouped.yesterday.length > 0 || grouped.older.length > 0) && (
+              <div className="space-y-4">
+                <div className="px-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+                  <MessageSquare className="w-3 h-3 text-slate-500" />
+                  <span>Unpinned Chats History</span>
                 </div>
-                {grouped.today.map(chat => (
-                  <ChatListItem
-                    key={chat.id}
-                    chat={chat}
-                    activeChatId={activeChatId}
-                    activeMenuChatId={activeMenuChatId}
-                    onSelectChat={onSelectChat}
-                    onMenuClick={handleMenuClick}
-                    onPinChat={onPinChat}
-                    onDeleteChatRequest={onDeleteChatRequest}
-                    onCloseMenu={() => setActiveMenuChatId(null)}
-                    menuRef={activeMenuChatId === chat.id ? menuRef : null}
-                    onCloseMobileDrawer={onClose}
-                  />
-                ))}
-              </div>
-            )}
 
-            {/* Yesterday Section */}
-            {grouped.yesterday.length > 0 && (
-              <div className="space-y-1">
-                <div className="px-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                  Yesterday
-                </div>
-                {grouped.yesterday.map(chat => (
-                  <ChatListItem
-                    key={chat.id}
-                    chat={chat}
-                    activeChatId={activeChatId}
-                    activeMenuChatId={activeMenuChatId}
-                    onSelectChat={onSelectChat}
-                    onMenuClick={handleMenuClick}
-                    onPinChat={onPinChat}
-                    onDeleteChatRequest={onDeleteChatRequest}
-                    onCloseMenu={() => setActiveMenuChatId(null)}
-                    menuRef={activeMenuChatId === chat.id ? menuRef : null}
-                    onCloseMobileDrawer={onClose}
-                  />
-                ))}
-              </div>
-            )}
+                <div className="space-y-4 pl-1">
+                  {/* Today Section */}
+                  {grouped.today.length > 0 && (
+                    <div className="space-y-1">
+                      <div className="px-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                        Today
+                      </div>
+                      {grouped.today.map(chat => (
+                        <ChatListItem
+                          key={chat.id}
+                          chat={chat}
+                          activeChatId={activeChatId}
+                          activeMenuChatId={activeMenuChatId}
+                          onSelectChat={onSelectChat}
+                          onMenuClick={handleMenuClick}
+                          onPinChat={onPinChat}
+                          onDeleteChatRequest={onDeleteChatRequest}
+                          onCloseMenu={() => setActiveMenuChatId(null)}
+                          menuRef={activeMenuChatId === chat.id ? menuRef : null}
+                          onCloseMobileDrawer={onClose}
+                        />
+                      ))}
+                    </div>
+                  )}
 
-            {/* Older Section */}
-            {grouped.older.length > 0 && (
-              <div className="space-y-1">
-                <div className="px-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                  Previous Chats
+                  {/* Yesterday Section */}
+                  {grouped.yesterday.length > 0 && (
+                    <div className="space-y-1">
+                      <div className="px-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                        Yesterday
+                      </div>
+                      {grouped.yesterday.map(chat => (
+                        <ChatListItem
+                          key={chat.id}
+                          chat={chat}
+                          activeChatId={activeChatId}
+                          activeMenuChatId={activeMenuChatId}
+                          onSelectChat={onSelectChat}
+                          onMenuClick={handleMenuClick}
+                          onPinChat={onPinChat}
+                          onDeleteChatRequest={onDeleteChatRequest}
+                          onCloseMenu={() => setActiveMenuChatId(null)}
+                          menuRef={activeMenuChatId === chat.id ? menuRef : null}
+                          onCloseMobileDrawer={onClose}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Older Section */}
+                  {grouped.older.length > 0 && (
+                    <div className="space-y-1">
+                      <div className="px-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                        Previous Chats
+                      </div>
+                      {grouped.older.map(chat => (
+                        <ChatListItem
+                          key={chat.id}
+                          chat={chat}
+                          activeChatId={activeChatId}
+                          activeMenuChatId={activeMenuChatId}
+                          onSelectChat={onSelectChat}
+                          onMenuClick={handleMenuClick}
+                          onPinChat={onPinChat}
+                          onDeleteChatRequest={onDeleteChatRequest}
+                          onCloseMenu={() => setActiveMenuChatId(null)}
+                          menuRef={activeMenuChatId === chat.id ? menuRef : null}
+                          onCloseMobileDrawer={onClose}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
-                {grouped.older.map(chat => (
-                  <ChatListItem
-                    key={chat.id}
-                    chat={chat}
-                    activeChatId={activeChatId}
-                    activeMenuChatId={activeMenuChatId}
-                    onSelectChat={onSelectChat}
-                    onMenuClick={handleMenuClick}
-                    onPinChat={onPinChat}
-                    onDeleteChatRequest={onDeleteChatRequest}
-                    onCloseMenu={() => setActiveMenuChatId(null)}
-                    menuRef={activeMenuChatId === chat.id ? menuRef : null}
-                    onCloseMobileDrawer={onClose}
-                  />
-                ))}
               </div>
             )}
           </>
@@ -223,31 +286,24 @@ export default function Sidebar({
       {/* Sidebar Bottom Controls */}
       <div className="p-4 border-t border-slate-800/80 bg-slate-950/20 space-y-1.5">
         <button
-          onClick={onOpenSettings}
-          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-xl transition-all cursor-pointer"
-        >
-          <Settings className="w-4 h-4" />
-          <span>Settings</span>
-        </button>
-        <button
-          onClick={onOpenHelp}
-          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-xl transition-all cursor-pointer"
-        >
-          <HelpCircle className="w-4 h-4" />
-          <span>Help & FAQs</span>
-        </button>
-        <button
           onClick={onOpenAbout}
-          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-xl transition-all cursor-pointer"
+          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-xl transition-all cursor-pointer text-left"
         >
           <Info className="w-4 h-4" />
           <span>About GovAssist</span>
         </button>
+        <button
+          onClick={() => {
+            if (onNavigateProfile) onNavigateProfile();
+            // TODO: Route to Profile page (e.g. navigate('/profile') or setPage('profile'))
+          }}
+          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-xl transition-all cursor-pointer text-left"
+        >
+          <User className="w-4 h-4" />
+          <span>Profile</span>
+        </button>
 
-        {/* Version label */}
-        <div className="pt-2 text-center">
-          <span className="text-[10px] text-slate-600 font-mono tracking-wider">v1.0.0 (Production Mock)</span>
-        </div>
+
       </div>
     </div>
   );
@@ -312,8 +368,8 @@ function ChatListItem({
         onCloseMobileDrawer();
       }}
       className={`group relative flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer select-none transition-all duration-200 ${isActive
-          ? 'bg-slate-800 text-slate-100 border border-slate-700/50 shadow-md shadow-black/10'
-          : 'hover:bg-slate-800/40 text-slate-400 hover:text-slate-200 border border-transparent'
+        ? 'bg-slate-800 text-slate-100 border border-slate-700/50 shadow-md shadow-black/10'
+        : 'hover:bg-slate-800/40 text-slate-400 hover:text-slate-200 border border-transparent'
         }`}
     >
       <div className="flex items-center gap-2.5 min-w-0 pr-6">
