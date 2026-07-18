@@ -1,0 +1,10 @@
+# FastAPI and Pydantic configured for Python 3.14.6 compatibility
+pydantic<2.0
+fastapi==0.99.1
+uvicorn>=0.22.0
+motor>=3.2.0
+pymongo>=4.4.0
+groq>=0.4.2
+python-dotenv>=1.0.0
+# chromadb is omitted due to native Rust compilation dependencies.
+# The codebase automatically falls back to an internal pure-Python ChromaDB.

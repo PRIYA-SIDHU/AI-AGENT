@@ -1,1 +1,18 @@
 node_modules
+
+# Python venv
+backend/venv/
+
+# Local configuration
+.env
+backend/.env
+
+# Local ChromaDB persistent store
+backend/vector_db/chroma_db_store/
+
+# Python compiled caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
