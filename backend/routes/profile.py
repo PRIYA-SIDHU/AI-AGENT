@@ -11,7 +11,7 @@ async def save_profile(profile: ProfileModel):
     db = get_db()
     await db["profiles"].replace_one(
         {"_id": PROFILE_ID},
-        {"_id": PROFILE_ID, **profile.model_dump()},
+        {"_id": PROFILE_ID, **profile.dict()},
         upsert=True
     )
     return {"status": "saved"}
