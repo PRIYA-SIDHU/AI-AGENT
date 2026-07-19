@@ -5,6 +5,7 @@ import Avatar from './Avatar';
 export default function Header({
   activeChatTitle,
   onToggleSidebar,
+  initials = "?",
   onOpenNotifications
 }) {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -88,7 +89,7 @@ export default function Header({
         <div className="h-6 w-[1px] bg-slate-800" />
 
         {/* User avatar */}
-        <Avatar role="user" className="w-8 h-8 cursor-pointer ring-2 ring-slate-800/60 hover:ring-gov-accent/30 transition-all" />
+        <Avatar role="user" initials={initials} className="w-8 h-8 cursor-pointer ring-2 ring-slate-800/60 hover:ring-gov-accent/30 transition-all" />
       </div>
     </header>
   );

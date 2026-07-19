@@ -8,6 +8,7 @@ from backend.database.mongodb import connect_to_mongo, close_mongo_connection
 from backend.vector_db.chroma_loader import chroma_loader
 from backend.routes.chat import router as chat_router
 from backend.routes.history import router as history_router
+from backend.routes.profile import router as profile_router
 
 # Setup logging
 logging.basicConfig(
@@ -67,6 +68,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 # Register routers
 app.include_router(chat_router, tags=["Chats"])
 app.include_router(history_router, tags=["History"])
+app.include_router(profile_router, tags=["Profile"])
 
 @app.get("/", tags=["General"])
 async def root():

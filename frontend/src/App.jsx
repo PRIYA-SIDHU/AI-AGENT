@@ -18,6 +18,7 @@ import ChatArea from './components/ChatArea';
 import ChatInput from './components/ChatInput';
 import DeleteDialog from './components/DeleteDialog';
 import Home from './pages/home';
+import Profile from './pages/profile';
 import { initialChats, getMockResponse } from './data/dummyData';
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
 
   // Page navigation state — 'chat' is default, 'home' shows the Home landing page
   const [currentPage, setCurrentPage] = useState('home');
+  const [profileInitials, setProfileInitials] = useState('?');
 
   // Settings, Help, About Modals State
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -41,6 +43,16 @@ export default function App() {
 
   // Load history from FastAPI backend on mount
   React.useEffect(() => {
+    // Fetch saved profile initials
+    fetch('http://localhost:8000/profile')
+      .then(r => r.json())
+      .then(data => {
+        if (data?.first_name) {
+          setProfileInitials((data.first_name[0] + (data.surname?.[0] ?? '')).toUpperCase());
+        }
+      })
+      .catch(() => {});
+
     const init = async () => {
       try {
         const res = await fetch("http://localhost:8000/history");
@@ -307,19 +319,24 @@ export default function App() {
         onClose={() => setIsSidebarOpen(false)}
         onOpenAbout={() => setIsAboutOpen(true)}
         onNavigateHome={() => { setCurrentPage('home'); setIsSidebarOpen(false); }}
+        onNavigateProfile={() => { setCurrentPage('profile'); setIsSidebarOpen(false); }}
       />
 
       {/* 2. Main Right-hand Area */}
       <div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden">
         {/* Header — always visible */}
         <Header
-          activeChatTitle={currentPage === 'home' ? 'Home' : (activeChat ? activeChat.title : 'GovAssist Assistant')}
+          activeChatTitle={currentPage === 'home' ? 'Home' : currentPage === 'profile' ? 'My Profile' : (activeChat ? activeChat.title : 'GovAssist Assistant')}
           onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+          initials={profileInitials}
         />
 
         {currentPage === 'home' ? (
-          /* Home Landing Page */
           <Home />
+        ) : currentPage === 'profile' ? (
+          <Profile onProfileSaved={(data) => {
+            setProfileInitials((data.first_name[0] + (data.surname?.[0] ?? '')).toUpperCase());
+          }} />
         ) : (
           /* Chat Area */
           <>
