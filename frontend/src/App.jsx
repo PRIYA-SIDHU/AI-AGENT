@@ -21,6 +21,7 @@ import Home from './pages/home';
 import Profile from './pages/profile';
 import { initialChats, getMockResponse } from './data/dummyData';
 import SchemesPage from './pages/schemes';
+import EligibleschemesPage from './pages/Eligiblescheme';
 
 export default function App() {
   const [chats, setChats] = useState([]);
@@ -321,6 +322,7 @@ export default function App() {
         onOpenAbout={() => setIsAboutOpen(true)}
         onNavigateHome={() => { setCurrentPage('home'); setIsSidebarOpen(false); }}
         onNavigateAllSchemes={() => { setCurrentPage('schemes'); setIsSidebarOpen(false); }}
+        onNavigateEligibleSchemes={() => { setCurrentPage('eligibleschemes'); setIsSidebarOpen(false); }}
         onNavigateProfile={() => { setCurrentPage('profile'); setIsSidebarOpen(false); }}
       />
 
@@ -328,7 +330,7 @@ export default function App() {
       <div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden">
         {/* Header — always visible */}
         <Header
-          activeChatTitle={currentPage === 'home' ? 'Home' : currentPage === 'profile' ? 'My Profile' : currentPage === 'schemes' ? 'All Schemes': (activeChat ? activeChat.title : 'GovAssist Assistant')}
+          activeChatTitle={currentPage === 'home' ? 'Home' : currentPage === 'profile' ? 'My Profile' : currentPage === 'schemes' ? 'All Schemes':  currentPage === 'eligibleschemes' ? 'Eligible Schemes':(activeChat ? activeChat.title : 'GovAssist Assistant')}
           onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           initials={profileInitials}
         />
@@ -341,6 +343,8 @@ export default function App() {
           }} />
         ) : currentPage === 'schemes' ? (
           <SchemesPage />
+        ) : currentPage === 'eligibleschemes' ? (
+          <EligibleschemesPage />
         ) : (
           /* Chat Area */
           <>
