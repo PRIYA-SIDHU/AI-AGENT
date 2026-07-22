@@ -41,12 +41,7 @@ export default function Header({
 
       {/* Right side: Quick stats/actions */}
       <div className="flex items-center gap-3">
-        {/* Dark Theme Indicator */}
-        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800/60 rounded-xl text-slate-400 hover:text-slate-300 transition-colors select-none text-[10px] font-semibold tracking-wider uppercase font-mono">
-          <Sparkles className="w-3.5 h-3.5 text-gov-accent" />
-          <span className="hidden sm:inline">Dark Theme Active</span>
-        </div>
-
+        
         {/* Notifications Icon with Badge */}
         <div className="relative">
           <button

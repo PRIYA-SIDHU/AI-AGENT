@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, FilePlus, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { Pencil, FilePlus, Send, CheckCircle, AlertCircle, Loader, Trash2 } from 'lucide-react';
 
 const BLANK = {
   first_name: '', surname: '', email: '', dob: '', gender: '', mobile: '',
@@ -60,7 +60,7 @@ const RadioGroup = ({ name, value, onChange, disabled }) => (
 export default function Profile({ onProfileSaved }) {
   const [form, setForm] = useState(BLANK);
   const [readOnly, setReadOnly] = useState(true);
-  const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error'
+  const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error' | 'deleted'
   const [hasProfile, setHasProfile] = useState(false);
 
   useEffect(() => {
@@ -115,6 +115,28 @@ export default function Profile({ onProfileSaved }) {
     setStatus(null);
   };
 
+  const handleDelete = async () => {
+    if (!hasProfile) return;
+    if (!window.confirm('Delete your saved profile? This will remove it from the website and database.')) return;
+
+    setStatus('loading');
+    try {
+      const res = await fetch('http://localhost:8000/profile', { method: 'DELETE' });
+      if (res.ok) {
+        setForm(BLANK);
+        setHasProfile(false);
+        setReadOnly(false);
+        setStatus('deleted');
+        onProfileSaved?.(null);
+        setTimeout(() => setStatus(null), 3000);
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
   return (
     <div className="flex-1 overflow-y-auto bg-gov-bg px-4 py-6 md:px-8">
       <div className="max-w-3xl mx-auto">
@@ -126,10 +148,16 @@ export default function Profile({ onProfileSaved }) {
           </h1>
           <div className="flex items-center gap-2">
             {hasProfile && readOnly && (
-              <button onClick={handleEdit}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-cyan-400 border border-cyan-500/40 rounded-lg hover:bg-cyan-950/30 transition-all">
-                <Pencil className="w-3.5 h-3.5" /> Edit
-              </button>
+              <>
+                <button onClick={handleEdit}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-cyan-400 border border-cyan-500/40 rounded-lg hover:bg-cyan-950/30 transition-all">
+                  <Pencil className="w-3.5 h-3.5" /> Edit
+                </button>
+                <button onClick={handleDelete}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-rose-400 border border-rose-500/40 rounded-lg hover:bg-rose-950/30 transition-all">
+                  <Trash2 className="w-3.5 h-3.5" /> Delete
+                </button>
+              </>
             )}
             <button onClick={handleNew}
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-300 border border-slate-700 rounded-lg hover:bg-slate-800 transition-all">
@@ -274,11 +302,16 @@ export default function Profile({ onProfileSaved }) {
               <AlertCircle className="w-4 h-4 shrink-0" /> Failed to save. Please try again.
             </div>
           )}
+          {status === 'deleted' && (
+            <div className="flex items-center gap-2 text-amber-400 text-sm bg-amber-950/30 border border-amber-500/30 rounded-lg px-4 py-2">
+              <AlertCircle className="w-4 h-4 shrink-0" /> Profile deleted successfully.
+            </div>
+          )}
 
           {/* ── SUBMIT BUTTON ── */}
           {!readOnly && (
             <button type="submit" disabled={status === 'loading'}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm text-slate-900 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 transition-all shadow-lg shadow-cyan-900/30 disabled:opacity-60 disabled:cursor-not-allowed">
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm text-slate-900 bg-linear-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 transition-all shadow-lg shadow-cyan-900/30 disabled:opacity-60 disabled:cursor-not-allowed">
               {status === 'loading'
                 ? <><Loader className="w-4 h-4 animate-spin" /> Submitting...</>
                 : <><Send className="w-4 h-4" /> Submit Application</>}

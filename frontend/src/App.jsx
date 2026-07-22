@@ -22,6 +22,7 @@ import Profile from './pages/profile';
 import { initialChats, getMockResponse } from './data/dummyData';
 import SchemesPage from './pages/schemes';
 import EligibleschemesPage from './pages/Eligiblescheme';
+import StarredSchemesPage from './pages/starred';
 
 export default function App() {
   const [chats, setChats] = useState([]);
@@ -305,7 +306,30 @@ export default function App() {
       setIsSettingsOpen(false);
     }
   };
+  const [starredSchemes, setStarredSchemes] = useState(() => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const saved = window.localStorage.getItem('starredSchemes');
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+});
+React.useEffect(() => {
+  if (typeof window !== 'undefined') {
+    window.localStorage.setItem('starredSchemes', JSON.stringify(starredSchemes));
+  }
+}, [starredSchemes]);
 
+const handleToggleStarredScheme = (scheme) => {
+  setStarredSchemes(prev => {
+    const exists = prev.some(item => item.id === scheme.id);
+    if (exists) {
+      return prev.filter(item => item.id !== scheme.id);
+    }
+    return [...prev, scheme];
+  });
+};
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-gov-bg text-slate-100 font-sans selection:bg-emerald-500/25 selection:text-gov-accent">
 
@@ -323,6 +347,7 @@ export default function App() {
         onNavigateHome={() => { setCurrentPage('home'); setIsSidebarOpen(false); }}
         onNavigateAllSchemes={() => { setCurrentPage('schemes'); setIsSidebarOpen(false); }}
         onNavigateEligibleSchemes={() => { setCurrentPage('eligibleschemes'); setIsSidebarOpen(false); }}
+        onNavigateStarredSchemes={() => { setCurrentPage('starred'); setIsSidebarOpen(false); }}
         onNavigateProfile={() => { setCurrentPage('profile'); setIsSidebarOpen(false); }}
       />
 
@@ -330,7 +355,19 @@ export default function App() {
       <div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden">
         {/* Header — always visible */}
         <Header
-          activeChatTitle={currentPage === 'home' ? 'Home' : currentPage === 'profile' ? 'My Profile' : currentPage === 'schemes' ? 'All Schemes':  currentPage === 'eligibleschemes' ? 'Eligible Schemes':(activeChat ? activeChat.title : 'GovAssist Assistant')}
+          activeChatTitle={
+  currentPage === 'home'
+    ? 'Home'
+    : currentPage === 'profile'
+    ? 'My Profile'
+    : currentPage === 'schemes'
+    ? 'All Schemes'
+    : currentPage === 'eligibleschemes'
+    ? 'Eligible Schemes'
+    : currentPage === 'starred'
+    ? 'Starred Schemes'
+    : (activeChat ? activeChat.title : 'GovAssist Assistant')
+}
           onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           initials={profileInitials}
         />
@@ -339,12 +376,27 @@ export default function App() {
           <Home />
         ) : currentPage === 'profile' ? (
           <Profile onProfileSaved={(data) => {
-            setProfileInitials((data.first_name[0] + (data.surname?.[0] ?? '')).toUpperCase());
+            if (data?.first_name) {
+              setProfileInitials((data.first_name[0] + (data.surname?.[0] ?? '')).toUpperCase());
+            } else {
+              setProfileInitials('?');
+            }
           }} />
         ) : currentPage === 'schemes' ? (
-          <SchemesPage />
+          <SchemesPage
+            starredSchemeIds={starredSchemes.map((scheme) => scheme.id)}
+            onToggleStarredScheme={handleToggleStarredScheme}
+          />
         ) : currentPage === 'eligibleschemes' ? (
-          <EligibleschemesPage />
+          <EligibleschemesPage
+            starredSchemeIds={starredSchemes.map((scheme) => scheme.id)}
+            onToggleStarredScheme={handleToggleStarredScheme}
+          />
+        ) : currentPage === 'starred' ? (
+          <StarredSchemesPage
+            starredSchemes={starredSchemes}
+            onToggleStarredScheme={handleToggleStarredScheme}
+          />
         ) : (
           /* Chat Area */
           <>
